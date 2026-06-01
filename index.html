@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drone Carrier - WebGL</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+        background-color: #000;
+      }
+      canvas {
+        display: block;
+        width: 100vw;
+        height: 100vh;
+      }
+    </style>
+    <script src="https://twgljs.org/dist/4.x/twgl-full.min.js"></script>
+  </head>
+  <body>
+    <canvas id="glcanvas"></canvas>
+    <audio
+      id="bgm"
+      src="assets/audio/loswin23-small-airplane-520026.mp3"
+      loop
+    ></audio>
+    <script type="module" src="main.js"></script>
+  </body>
+</html>
