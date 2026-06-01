@@ -1,45 +1,24 @@
-import { registerDrawCall } from "../../renderer.js";
-import { getLightingUniforms } from "../lighting.js";
+import { GameObject } from "../objects/GameObject.js";
+import { AssetManager } from "../engine/AssetManager.js";
 import { mat4 } from "../../utils/math.js";
-import { loadTexture } from "../../utils/textureLoader.js";
 
-export function initRoads(gl) {
-  const programInfo = twgl.createProgramInfo(gl, [
-    "shaders/phong.vert",
-    "shaders/phong.frag",
-  ]);
+export class Road extends GameObject {
+  constructor(gl, programInfo, isVertical) {
+    super();
+    this.programInfo = programInfo;
 
-  const arraysH = twgl.primitives.createPlaneVertices(500, 24);
-  const arraysV = twgl.primitives.createPlaneVertices(24, 500);
+    const width = isVertical ? 24 : 500;
+    const depth = isVertical ? 500 : 24;
 
-  const bufferInfoH = twgl.createBufferInfoFromArrays(gl, arraysH);
-  const bufferInfoV = twgl.createBufferInfoFromArrays(gl, arraysV);
+    this.bufferInfo = twgl.primitives.createPlaneBufferInfo(gl, width, depth);
 
-  const texture = loadTexture(gl, "assets/textures/ground_specular.jpg");
+    AssetManager.loadTexture(
+      "ground_specular",
+      "assets/textures/ground_specular.jpg",
+    );
+    this.texture = AssetManager.getTexture("ground_specular");
 
-  registerDrawCall((gl, globalUniforms) => {
-    gl.useProgram(programInfo.program);
-    twgl.setUniforms(programInfo, globalUniforms);
-    twgl.setUniforms(programInfo, getLightingUniforms());
-
-    twgl.setBuffersAndAttributes(gl, programInfo, bufferInfoH);
-    let worldH = mat4.identity();
-    worldH = mat4.translate(worldH, [0, 0.1, 0]);
-    twgl.setUniforms(programInfo, {
-      u_world: worldH,
-      u_worldInverseTranspose: mat4.transpose(mat4.inverse(worldH)),
-      u_diffuseMap: texture,
-    });
-    twgl.drawBufferInfo(gl, bufferInfoH);
-
-    twgl.setBuffersAndAttributes(gl, programInfo, bufferInfoV);
-    let worldV = mat4.identity();
-    worldV = mat4.translate(worldV, [0, 0.11, 0]);
-    twgl.setUniforms(programInfo, {
-      u_world: worldV,
-      u_worldInverseTranspose: mat4.transpose(mat4.inverse(worldV)),
-      u_diffuseMap: texture,
-    });
-    twgl.drawBufferInfo(gl, bufferInfoV);
-  });
+    // Diferença mínima no eixo Y para evitar Z-Fighting (sobreposição de texturas)
+    this.position = [0, isVertical ? 0.11 : 0.1, 0];
+  }
 }

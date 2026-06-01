@@ -1,3 +1,5 @@
+import { getLightingUniforms } from "../lighting.js";
+
 export class Scene {
   constructor() {
     this.gameObjects = [];
@@ -20,11 +22,15 @@ export class Scene {
   draw(gl, timeSec) {
     if (!this.camera) return;
 
+    // Obtém o estado atual da iluminação
+    const lightUniforms = getLightingUniforms();
+
     const globalUniforms = {
       u_viewInverse: this.camera.cameraMatrix,
       u_worldViewProjection: this.camera.viewProjection,
       u_viewPosition: this.camera.position,
       u_time: timeSec,
+      ...lightUniforms, // Injeta a luz e a direção na cena inteira
     };
 
     this.gameObjects.forEach((obj) => obj.draw(gl, globalUniforms));
