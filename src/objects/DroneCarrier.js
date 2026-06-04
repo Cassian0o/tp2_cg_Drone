@@ -48,4 +48,16 @@ export class DroneCarrier extends GameObject {
     }
     super.update(deltaTime);
   }
+
+ // --- API pública para a câmera ---
+ 
+  getDronePosition() {
+    // Retorna cópia do array para evitar mutação externa
+    return [...this.position];
+  }
+ 
+  getDroneYaw() {
+    // Rotação no eixo Y em radianos
+    return this.rotation[1];
+  }
 }
