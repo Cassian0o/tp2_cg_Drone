@@ -5,6 +5,7 @@ export class Terrain extends GameObject {
   constructor(gl, programInfo) {
     super();
     this.programInfo = programInfo;
+    this.castsShadow = false;
 
     const arrays = twgl.primitives.createPlaneVertices(1000, 1000, 50, 50);
     this.bufferInfo = twgl.createBufferInfoFromArrays(gl, arrays);

@@ -6,6 +6,8 @@ export class Road extends GameObject {
   constructor(gl, programInfo, isVertical) {
     super();
     this.programInfo = programInfo;
+    this.castsShadow = false;
+    this.materialColor = [0.46, 0.47, 0.48];
 
     const width = isVertical ? 24 : 500;
     const depth = isVertical ? 500 : 24;

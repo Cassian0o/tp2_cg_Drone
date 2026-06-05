@@ -1,3 +1,4 @@
+// Engine gerencia o contexto WebGL, o loop de atualização e a cena principal.
 export class Engine {
   constructor(canvasId) {
     const canvas = document.getElementById(canvasId);
@@ -13,10 +14,12 @@ export class Engine {
     this.lastTime = 0;
   }
 
+  // Associa a cena que será renderizada pelo motor.
   setScene(scene) {
     this.scene = scene;
   }
 
+  // Inicia o loop de animação.
   start() {
     requestAnimationFrame((time) => this.loop(time));
   }
@@ -31,6 +34,7 @@ export class Engine {
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 
     if (this.scene) {
+      // Atualiza todos os objetos da cena com o tempo decorrido.
       this.scene.update(deltaTime);
       this.scene.draw(this.gl, time * 0.001);
     }

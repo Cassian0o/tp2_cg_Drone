@@ -6,8 +6,8 @@ import { lightingState } from "../lighting.js";
 
 export class DayNightCycle {
   constructor() {
-    this.timeOfDay = 0;
-    this.speed = 0.2; // Velocidade do ciclo
+    this.timeOfDay = Math.PI / 2.4;
+    this.speed = 0.018; // Velocidade do ciclo
   }
 
   update(deltaTime) {
@@ -28,12 +28,12 @@ export class DayNightCycle {
     // Interpolação de cores Dia/Noite
     if (dirY > 0) {
       // Dia
-      lightingState.directionalLightColor = [1.0, 0.9, 0.8];
-      lightingState.ambientLight = [0.4, 0.4, 0.45];
+      lightingState.directionalLightColor = [0.98, 0.94, 0.86];
+      lightingState.ambientLight = [0.34, 0.36, 0.4];
     } else {
       // Noite
-      lightingState.directionalLightColor = [0.2, 0.2, 0.4];
-      lightingState.ambientLight = [0.1, 0.1, 0.15];
+      lightingState.directionalLightColor = [0.16, 0.2, 0.38];
+      lightingState.ambientLight = [0.08, 0.09, 0.14];
     }
   }
 }

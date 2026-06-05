@@ -1,3 +1,4 @@
+// Gerencia texturas carregadas para evitar carregamento duplicado.
 export class AssetManager {
   static textures = {};
 
@@ -6,7 +7,7 @@ export class AssetManager {
   }
 
   static loadTexture(name, url) {
-    // Se a textura já foi carregada antes, ignora e usa a da memória!
+    // Se a textura já foi carregada antes, ignora e usa a da memória.
     if (this.textures[name]) return;
 
     this.textures[name] = twgl.createTexture(this.gl, {

@@ -1,3 +1,4 @@
+// InputManager mantém o estado atual das teclas pressionadas.
 export class InputManager {
   static keys = {};
 

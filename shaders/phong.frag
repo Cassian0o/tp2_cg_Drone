@@ -7,6 +7,8 @@ in vec3 v_surfaceToView;
 in vec3 v_worldPosition;
 
 uniform sampler2D u_diffuseMap;
+uniform vec3  u_materialColor;
+uniform vec3  u_emissiveColor;
 uniform vec3  u_lightDir;
 uniform vec3  u_lightColor;
 uniform vec3  u_ambientLight;
@@ -37,7 +39,7 @@ void main() {
         specular = pow(max(dot(normal, halfVector), 0.0), 50.0);
     }
 
-    vec4 diffuseColor = texture(u_diffuseMap, v_texcoord);
+    vec4 diffuseColor = texture(u_diffuseMap, v_texcoord) * vec4(u_materialColor, 1.0);
     vec3 color = diffuseColor.rgb * u_ambientLight
                + diffuseColor.rgb * light * u_lightColor
                + specular * u_lightColor;
@@ -48,15 +50,18 @@ void main() {
         vec3  toLight  = u_pointLightPositions[i] - v_worldPosition;
         float dist     = length(toLight);
         vec3  lightDir = toLight / dist;
-        float atten    = 1.0 / (1.0 + 0.09 * dist + 0.032 * dist * dist);
+        float atten    = 1.0 / (1.0 + 0.035 * dist + 0.003 * dist * dist);
         float diff     = max(dot(normal, lightDir), 0.0);
         color += diffuseColor.rgb * u_pointLightColors[i] * diff * atten;
     }
 
+    color += u_emissiveColor;
+
     // Neblina exponencial
     if (u_fogOn == 1) {
         float dist    = length(u_viewPosition - v_worldPosition);
-        float fogFact = exp(-u_fogDensity * dist);
+        float fogDist = u_fogDensity * dist;
+        float fogFact = exp(-(fogDist * fogDist));
         fogFact       = clamp(fogFact, 0.0, 1.0);
         color         = mix(u_fogColor.rgb, color, fogFact);
     }

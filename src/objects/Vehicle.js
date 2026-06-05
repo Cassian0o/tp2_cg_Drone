@@ -8,6 +8,7 @@ const AVAILABLE_MODELS = [
   "suv", "firetruck", "delivery", "van", "truck",
 ];
 
+// Vehicle carrega modelos de carros e aplica a textura compartilhada.
 export class Vehicle extends GameObject {
   constructor(gl, programInfo, modelName) {
     super();
@@ -30,7 +31,7 @@ export class Vehicle extends GameObject {
   }
 
   async _loadModel() {
-    // Garante que o nome existe na pasta; caso contrário usa sedan como fallback
+    // Garante que o nome existe na pasta; caso contrário usa sedan como fallback.
     const name = AVAILABLE_MODELS.includes(this._modelName)
       ? this._modelName
       : "sedan";
@@ -45,6 +46,7 @@ export class Vehicle extends GameObject {
   }
 
   update(deltaTime) {
+    // Move o veículo e repete a posição quando sai da área do mapa.
     this.position[0] += this.direction[0] * this.speed * deltaTime;
     this.position[2] += this.direction[2] * this.speed * deltaTime;
 

@@ -1,3 +1,4 @@
+// Carrega um modelo OBJ simples e converte para TWGL buffer info.
 export async function loadObj(gl, url) {
   const response = await fetch(url);
   if (!response.ok) throw new Error(`OBJ não encontrado: ${url}`);
@@ -6,9 +7,9 @@ export async function loadObj(gl, url) {
 }
 
 function parseObj(gl, text) {
-  const positions = [];   // vec3 crus do arquivo
-  const texcoords = [];   // vec2 crus do arquivo
-  const normals   = [];   // vec3 crus do arquivo
+  const positions = [];   // vértices crus do arquivo
+  const texcoords = [];   // coordenadas de textura crus do arquivo
+  const normals   = [];   // normais crus do arquivo
 
   const outPos  = [];     // arrays finais (indexados por face)
   const outTex  = [];
@@ -39,7 +40,7 @@ function parseObj(gl, text) {
         parseFloat(parts[3])
       );
     } else if (cmd === 'f') {
-      // Suporta polígonos (fan triangulation)
+      // Suporta polígonos com triangulação em fan.
       const verts = parts.slice(1);
       for (let i = 1; i < verts.length - 1; i++) {
         pushVertex(verts[0],   positions, texcoords, normals, outPos, outTex, outNorm);

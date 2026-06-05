@@ -31,6 +31,8 @@ export class Cockpit extends GameObject {
       u_world: world,
       u_worldInverseTranspose: twgl.m4.transpose(twgl.m4.inverse(world)),
       u_diffuseMap: this.texture,
+      u_materialColor: this.materialColor,
+      u_emissiveColor: this.emissiveColor,
       u_opacity: this.opacity,
     });
 

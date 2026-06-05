@@ -2,13 +2,13 @@
 // src/lighting.js (Atualizado)
 // [x] Luzes pontuais nos postes
 // ==========================================
-import { isKeyPressed } from "../utils/input.js";
+import { InputManager } from "./engine/InputManager.js";
 
 // Adicionado array de pointLights para os postes
 export let lightingState = {
-  directionalLightColor: [1.0, 1.0, 0.9],
-  directionalLightDir: [-0.577, -0.577, -0.577], // Normalizado internamente
-  ambientLight: [0.2, 0.2, 0.22],
+  directionalLightColor: [0.98, 0.94, 0.86],
+  directionalLightDir: [-0.45, -0.82, -0.36],
+  ambientLight: [0.34, 0.36, 0.4],
   isLightOn: true,
   pointLights: [], // { position: [x,y,z], color: [r,g,b], constant, linear, quadratic }
 };
@@ -16,13 +16,15 @@ export let lightingState = {
 let lKeyWasPressed = false;
 
 export function initLighting() {
-  setInterval(() => {
-    const isLPressed = isKeyPressed("L");
-    if (isLPressed && !lKeyWasPressed) {
-      lightingState.isLightOn = !lightingState.isLightOn;
-    }
-    lKeyWasPressed = isLPressed;
-  }, 1000 / 60);
+  lKeyWasPressed = false;
+}
+
+export function updateLighting() {
+  const isLPressed = InputManager.isKeyPressed("L");
+  if (isLPressed && !lKeyWasPressed) {
+    lightingState.isLightOn = !lightingState.isLightOn;
+  }
+  lKeyWasPressed = isLPressed;
 }
 
 export function addPointLight(position, color) {
@@ -35,23 +37,37 @@ export function addPointLight(position, color) {
   });
 }
 
-export function getLightingUniforms() {
+export function getLightingUniforms(viewPosition = [0, 0, 0]) {
   // Converte point lights para arrays planos para envio ao shader
   const pointLightPositions = [];
   const pointLightColors = [];
 
-  lightingState.pointLights.forEach((light) => {
+  const activePointLights = lightingState.pointLights
+    .map((light) => {
+      const dx = light.position[0] - viewPosition[0];
+      const dy = light.position[1] - viewPosition[1];
+      const dz = light.position[2] - viewPosition[2];
+      return { light, distSq: dx * dx + dy * dy + dz * dz };
+    })
+    .sort((a, b) => a.distSq - b.distSq)
+    .slice(0, 8)
+    .map((entry) => entry.light);
+
+  activePointLights.forEach((light) => {
     pointLightPositions.push(...light.position);
     pointLightColors.push(...light.color);
   });
 
   return {
-    u_ambientLight: lightingState.ambientLight,
+    u_ambientLight: lightingState.isLightOn
+      ? lightingState.ambientLight
+      : [0.03, 0.03, 0.04],
     u_lightDir: lightingState.directionalLightDir,
     u_lightColor: lightingState.isLightOn
       ? lightingState.directionalLightColor
       : [0, 0, 0],
-    u_numPointLights: lightingState.pointLights.length,
+    u_numPointLights: lightingState.isLightOn ? activePointLights.length : 0,
+    u_castShadows: lightingState.isLightOn && lightingState.directionalLightDir[1] < -0.08,
     u_pointLightPositions: pointLightPositions.length
       ? pointLightPositions
       : [0, 0, 0],

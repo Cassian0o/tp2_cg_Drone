@@ -3,35 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Drone Carrier - WebGL</title>
+    <title>Airplane Carrier - WebGL</title>
     <style>
       body {
         margin: 0;
         overflow: hidden;
         background-color: #000;
       }
+
       canvas {
         display: block;
         width: 100vw;
         height: 100vh;
       }
-      #start-ui {
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        color: white;
-        font-family: sans-serif;
-        background: rgba(0, 0, 0, 0.7);
-        padding: 15px;
-        border-radius: 8px;
-        cursor: pointer;
-        z-index: 10;
-      }
     </style>
     <script src="https://twgljs.org/dist/4.x/twgl-full.min.js"></script>
   </head>
   <body>
-    <div id="start-ui">Clique aqui para iniciar a Engine (Habilitar Áudio)</div>
     <canvas id="glcanvas"></canvas>
 
     <audio

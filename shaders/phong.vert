@@ -14,7 +14,7 @@ out vec3 v_surfaceToView;
 out vec3 v_worldPosition;
 
 void main() {
-    gl_Position    = u_worldViewProjection * a_position;
+    gl_Position    = u_worldViewProjection * u_world * a_position;
     v_normal       = mat3(u_worldInverseTranspose) * a_normal;
     v_texcoord     = a_texcoord;
 

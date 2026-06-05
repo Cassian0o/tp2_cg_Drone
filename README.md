@@ -41,7 +41,7 @@ O jogador controla o drone com as teclas WASD e pode alternar entre três modos 
 | `↑ ↓ ← →` | Girar o olhar na câmera da cabine |
 | `L` | Toggle iluminação direcional |
 | `N` | Toggle neblina |
-
+| `P` | Pouso do Drone |
 ---
 
 ## Funcionalidades implementadas
@@ -74,7 +74,7 @@ O jogador controla o drone com as teclas WASD e pode alternar entre três modos 
 | Vidro semitransparente | +4% | Thainá | Cockpit com alpha blending, desenhado por último |
 | Ciclo dia/noite | +10% | Marcelo | Direção e cor da luz variam ao longo do tempo |
 | Neblina | +4% | Marcelo | Fog exponencial ativado pela tecla `N` |
-| Carros voadores | +10% | Marcelo | 3 carros com rotas autônomas em altitude |
+| Carros movimetando | +10% | Marcelo | 3 carros com rotas autônomas|
 | Luzes pontuais nos postes | +4% | Marcelo | Point lights com atenuação nos 8 postes da cidade |
 | Partículas de fumaça | +8% | Marcelo | Sistema de partículas emitidas na posição do drone |
 | Grama billboard | +6% | Marcelo | Quads de grama sempre voltados para a câmera |

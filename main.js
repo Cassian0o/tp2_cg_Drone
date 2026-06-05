@@ -5,13 +5,15 @@ import { City }            from "./src/world/city.js";
 import { InputManager }    from "./src/engine/InputManager.js";
 import { AssetManager }    from "./src/engine/AssetManager.js";
 import { DroneCarrier }    from "./src/objects/DroneCarrier.js";
-import { initLighting }    from "./src/lighting.js";
+import { initLighting, updateLighting } from "./src/lighting.js";
 import { DayNightCycle }   from "./src/world/dayNight.js";
-import { initFog }         from "./src/world/fog.js";
+import { initFog, updateFog } from "./src/world/fog.js";
 import { SmokeParticles }  from "./src/world/particles.js";
 import { Car }             from "./src/objects/Cars.js";
 import { Grass }           from "./src/world/grass.js";
 
+// Ponto de entrada principal da aplicação.
+// Carrega shaders, inicializa a cena e conecta o loop de renderização.
 async function loadShader(url) {
   const response = await fetch(url);
   if (!response.ok) throw new Error(`Falha ao carregar shader: ${url}`);
@@ -22,11 +24,14 @@ async function main() {
   const engine = new Engine("glcanvas");
   const gl     = engine.gl;
 
+  twgl.setAttributePrefix("a_");
+
   InputManager.init();
   AssetManager.init(gl);
   initLighting();
   initFog();
 
+  // Carrega os shaders de iluminação Phong para todos os objetos 3D.
   const vsSource = await loadShader("shaders/phong.vert");
   const fsSource = await loadShader("shaders/phong.frag");
   const phongProgramInfo = twgl.createProgramInfo(gl, [vsSource, fsSource]);
@@ -45,6 +50,8 @@ async function main() {
   // Ciclo dia/noite
   const dayNight = new DayNightCycle();
   scene.addUpdatable(dayNight);
+  scene.addUpdatable({ update: updateLighting });
+  scene.addUpdatable({ update: updateFog });
 
   // Partículas de fumaça seguindo o drone
   const smoke = new SmokeParticles(drone);
@@ -69,11 +76,29 @@ async function main() {
   _createHUD();
 
   const bgm = document.getElementById("bgm");
-  const ui  = document.getElementById("start-ui");
-  document.body.addEventListener("click", () => {
-    bgm.play().catch(() => {});
-    if (ui) ui.style.display = "none";
-  }, { once: true });
+  let audioEnabled = false;
+  const movementKeys = new Set(["W", "A", "S", "D", "Q", "E", "P"]);
+
+  // Começa a música quando o usuário mover o drone pela primeira vez.
+  window.addEventListener("keydown", (event) => {
+    const key = event.key.toUpperCase();
+    if (!movementKeys.has(key)) return;
+
+    audioEnabled = true;
+    if (bgm && bgm.paused) bgm.play().catch(() => {});
+  });
+
+  scene.addUpdatable({
+    update() {
+      if (!audioEnabled || !bgm) return;
+
+      if (drone.isMoving()) {
+        if (bgm.paused) bgm.play().catch(() => {});
+      } else if (!bgm.paused) {
+        bgm.pause();
+      }
+    },
+  });
 
   engine.setScene(scene);
   engine.start();
@@ -82,7 +107,8 @@ async function main() {
 function _createHUD() {
   const hud = document.createElement("div");
   hud.innerHTML = `
-    <b>Drone Carrier</b><br>
+    <b>Airplane Carrier</b><br>
+    E/Q - subir/descer &nbsp; P - pousar na pista<br>
     W/S — mover &nbsp;&nbsp; A/D — girar<br>
     1 — câmera aérea<br>
     2 — câmera lateral &nbsp; C — alternar lado<br>

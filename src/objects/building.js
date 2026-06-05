@@ -6,8 +6,11 @@ import { loadObj }       from "../engine/ObjLoader.js";
 const AVAILABLE_MODELS = [
   "building-a", "building-b", "building-c", "building-d",
   "building-e", "building-f", "building-g", "building-h",
+  "building-i", "building-j", "building-k", "building-l",
+  "building-m", "building-n",
   "building-skyscraper-a", "building-skyscraper-b",
   "building-skyscraper-c", "building-skyscraper-d",
+  "building-skyscraper-e",
 ];
 
 export class Building extends GameObject {
