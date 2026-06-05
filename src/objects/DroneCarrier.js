@@ -3,7 +3,10 @@ import { InputManager } from "../engine/InputManager.js";
 import { loadObj } from "../engine/ObjLoader.js";
 import { Propeller } from "./Propeller.js";
 import { Cockpit } from "./Cockpit.js";
-import { LANDING_PAD_POSITION, LANDING_PAD_RADIUS } from "../world/landingPad.js";
+import {
+  LANDING_PAD_POSITION,
+  LANDING_PAD_RADIUS,
+} from "../world/landingPad.js";
 
 const LANDED_ALTITUDE = 2.4;
 const MIN_ALTITUDE = LANDED_ALTITUDE;
@@ -48,7 +51,10 @@ export class DroneCarrier extends GameObject {
     try {
       this.bufferInfo = await loadObj(this.gl, this.objPath);
     } catch (e) {
-      console.warn("DroneCarrier: could not load intergalactic-spaceship.obj; using cube fallback.", e);
+      console.warn(
+        "DroneCarrier: could not load intergalactic-spaceship.obj; using cube fallback.",
+        e,
+      );
     }
   }
 
@@ -151,7 +157,10 @@ export class DroneCarrier extends GameObject {
       }
     }
 
-    this.position[1] = Math.max(MIN_ALTITUDE, Math.min(MAX_ALTITUDE, this.position[1]));
+    this.position[1] = Math.max(
+      MIN_ALTITUDE,
+      Math.min(MAX_ALTITUDE, this.position[1]),
+    );
     super.update(deltaTime);
   }
 

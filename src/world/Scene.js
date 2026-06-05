@@ -1,5 +1,5 @@
 import { getLightingUniforms } from "../lighting.js";
-import { getFogUniforms }      from "./fog.js";
+import { getFogUniforms } from "./fog.js";
 
 const shadowVs = `#version 300 es
 in vec4 a_position;
@@ -30,7 +30,7 @@ void main() {
 export class Scene {
   constructor() {
     this.gameObjects = [];
-    this.updatables  = [];
+    this.updatables = [];
     this.camera = null;
     this._shadowProgramInfo = null;
   }
@@ -61,16 +61,19 @@ export class Scene {
     if (!this.camera) return;
 
     const globalUniforms = {
-      u_viewInverse:         this.camera.cameraMatrix,
+      u_viewInverse: this.camera.cameraMatrix,
       u_worldViewProjection: this.camera.viewProjection,
-      u_viewPosition:        this.camera.position,
-      u_time:                timeSec,
+      u_viewPosition: this.camera.position,
+      u_time: timeSec,
       ...getLightingUniforms(this.camera.position),
       ...getFogUniforms(),
     };
 
     if (!this._shadowProgramInfo) {
-      this._shadowProgramInfo = twgl.createProgramInfo(gl, [shadowVs, shadowFs]);
+      this._shadowProgramInfo = twgl.createProgramInfo(gl, [
+        shadowVs,
+        shadowFs,
+      ]);
     }
 
     // Primeiro: desenha objetos opacos.
@@ -87,7 +90,8 @@ export class Scene {
 
       this.gameObjects.forEach((obj) => {
         if (this._isHiddenForCurrentCamera(obj)) return;
-        if (!obj.transparent) obj.drawShadow(gl, this._shadowProgramInfo, globalUniforms);
+        if (!obj.transparent)
+          obj.drawShadow(gl, this._shadowProgramInfo, globalUniforms);
       });
 
       gl.depthMask(true);

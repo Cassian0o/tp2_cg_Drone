@@ -138,3 +138,15 @@ tp2_cg_Drone/
 - [twgl.js](https://twgljs.org/) — helper para WebGL
 - JavaScript ES6 modules
 - GLSL ES 3.00
+
+## Fontes
+
+- Modelos 3D: https://sketchfab.com/features/free-3d-models
+
+## ScreenShots
+
+![Camera Aérea](image.png)
+
+![Camera Lateral](image-1.png)
+
+![Cabine](image-2.png)

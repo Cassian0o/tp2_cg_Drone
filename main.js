@@ -1,16 +1,16 @@
-import { Engine }          from "./src/engine/engine.js";
-import { Scene }           from "./src/world/Scene.js";
-import { Camera }          from "./src/camera/Camera.js";
-import { City }            from "./src/world/city.js";
-import { InputManager }    from "./src/engine/InputManager.js";
-import { AssetManager }    from "./src/engine/AssetManager.js";
-import { DroneCarrier }    from "./src/objects/DroneCarrier.js";
+import { Engine } from "./src/engine/engine.js";
+import { Scene } from "./src/world/Scene.js";
+import { Camera } from "./src/camera/Camera.js";
+import { City } from "./src/world/city.js";
+import { InputManager } from "./src/engine/InputManager.js";
+import { AssetManager } from "./src/engine/AssetManager.js";
+import { DroneCarrier } from "./src/objects/DroneCarrier.js";
 import { initLighting, updateLighting } from "./src/lighting.js";
-import { DayNightCycle }   from "./src/world/dayNight.js";
+import { DayNightCycle } from "./src/world/dayNight.js";
 import { initFog, updateFog } from "./src/world/fog.js";
-import { SmokeParticles }  from "./src/world/particles.js";
-import { Car }             from "./src/objects/Cars.js";
-import { Grass }           from "./src/world/grass.js";
+import { SmokeParticles } from "./src/world/particles.js";
+import { Car } from "./src/objects/Cars.js";
+import { Grass } from "./src/world/grass.js";
 
 // Ponto de entrada principal da aplicação.
 // Carrega shaders, inicializa a cena e conecta o loop de renderização.
@@ -22,7 +22,7 @@ async function loadShader(url) {
 
 async function main() {
   const engine = new Engine("glcanvas");
-  const gl     = engine.gl;
+  const gl = engine.gl;
 
   twgl.setAttributePrefix("a_");
 
@@ -36,7 +36,7 @@ async function main() {
   const fsSource = await loadShader("shaders/phong.frag");
   const phongProgramInfo = twgl.createProgramInfo(gl, [vsSource, fsSource]);
 
-  const scene  = new Scene();
+  const scene = new Scene();
   const camera = new Camera(gl);
   scene.setCamera(camera);
 
@@ -59,9 +59,24 @@ async function main() {
 
   // Carros voadores com rotas autônomas
   const flyingRoutes = [
-    [ [60, 30, -60], [-60, 35, -60], [-60, 30, 60], [60, 35, 60] ],
-    [ [-80, 25, 0],  [0, 28, 80],   [80, 25, 0],   [0, 22, -80] ],
-    [ [40, 40, 40],  [-40, 45, 40], [-40, 40, -40], [40, 45, -40] ],
+    [
+      [60, 30, -60],
+      [-60, 35, -60],
+      [-60, 30, 60],
+      [60, 35, 60],
+    ],
+    [
+      [-80, 25, 0],
+      [0, 28, 80],
+      [80, 25, 0],
+      [0, 22, -80],
+    ],
+    [
+      [40, 40, 40],
+      [-40, 45, 40],
+      [-40, 40, -40],
+      [40, 45, -40],
+    ],
   ];
   flyingRoutes.forEach((waypoints) => {
     const car = new Car(gl, phongProgramInfo, waypoints);
@@ -76,6 +91,7 @@ async function main() {
   _createHUD();
 
   const bgm = document.getElementById("bgm");
+  bgm.volume = 0.9; // Volume bem baixo (0-1)
   let audioEnabled = false;
   const movementKeys = new Set(["W", "A", "S", "D", "Q", "E", "P"]);
 
@@ -107,7 +123,7 @@ async function main() {
 function _createHUD() {
   const hud = document.createElement("div");
   hud.innerHTML = `
-    <b>Airplane Carrier</b><br>
+    <b>Drone Carrier</b><br>
     E/Q - subir/descer &nbsp; P - pousar na pista<br>
     W/S — mover &nbsp;&nbsp; A/D — girar<br>
     1 — câmera aérea<br>

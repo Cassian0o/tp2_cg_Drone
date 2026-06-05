@@ -1,28 +1,36 @@
-import { GameObject }  from "./GameObject.js";
+import { GameObject } from "./GameObject.js";
 import { AssetManager } from "../engine/AssetManager.js";
-import { loadObj }      from "../engine/ObjLoader.js";
+import { loadObj } from "../engine/ObjLoader.js";
 
 // Modelos disponíveis em assets/models/Textures/
 const AVAILABLE_MODELS = [
-  "police", "ambulance", "taxi", "sedan", "sedan-sports",
-  "suv", "firetruck", "delivery", "van", "truck",
+  "police",
+  "ambulance",
+  "taxi",
+  "sedan",
+  "sedan-sports",
+  "suv",
+  "firetruck",
+  "delivery",
+  "van",
+  "truck",
 ];
 
 // Vehicle carrega modelos de carros e aplica a textura compartilhada.
 export class Vehicle extends GameObject {
   constructor(gl, programInfo, modelName) {
     super();
-    this.gl          = gl;
+    this.gl = gl;
     this.programInfo = programInfo;
-    this._modelName  = modelName;
-    this._ready      = false;
+    this._modelName = modelName;
+    this._ready = false;
 
     // Textura colormap — todos os modelos Kenney usam ela
     AssetManager.loadTexture("colormap", "assets/models/Textures/colormap.png");
     this.texture = AssetManager.getTexture("colormap");
 
     // Velocidade e direção aleatórias
-    this.speed     = 10.0 + Math.random() * 15.0;
+    this.speed = 10.0 + Math.random() * 15.0;
     this.direction = [0, 0, 1];
 
     // Carrega o OBJ de forma assíncrona; enquanto carrega usa um cubo placeholder
@@ -41,7 +49,10 @@ export class Vehicle extends GameObject {
       this.bufferInfo = await loadObj(this.gl, path);
       this._ready = true;
     } catch (e) {
-      console.warn(`Vehicle: não foi possível carregar ${name}.obj, usando cubo.`, e);
+      console.warn(
+        `Vehicle: não foi possível carregar ${name}.obj, usando cubo.`,
+        e,
+      );
     }
   }
 
@@ -51,10 +62,10 @@ export class Vehicle extends GameObject {
     this.position[2] += this.direction[2] * this.speed * deltaTime;
 
     // Loop simples no mapa
-    if (this.position[2] >  150) this.position[2] = -150;
-    if (this.position[2] < -150) this.position[2] =  150;
-    if (this.position[0] >  150) this.position[0] = -150;
-    if (this.position[0] < -150) this.position[0] =  150;
+    if (this.position[2] > 150) this.position[2] = -150;
+    if (this.position[2] < -150) this.position[2] = 150;
+    if (this.position[0] > 150) this.position[0] = -150;
+    if (this.position[0] < -150) this.position[0] = 150;
 
     super.update(deltaTime);
   }

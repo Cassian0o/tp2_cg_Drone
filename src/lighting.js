@@ -67,7 +67,8 @@ export function getLightingUniforms(viewPosition = [0, 0, 0]) {
       ? lightingState.directionalLightColor
       : [0, 0, 0],
     u_numPointLights: lightingState.isLightOn ? activePointLights.length : 0,
-    u_castShadows: lightingState.isLightOn && lightingState.directionalLightDir[1] < -0.08,
+    u_castShadows:
+      lightingState.isLightOn && lightingState.directionalLightDir[1] < -0.08,
     u_pointLightPositions: pointLightPositions.length
       ? pointLightPositions
       : [0, 0, 0],

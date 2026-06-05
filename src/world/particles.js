@@ -117,9 +117,13 @@ export class SmokeParticles extends GameObject {
       const jitterSide = (Math.random() - 0.5) * 0.4;
       const jitterUp = Math.random() * 0.3;
       const spawn = [
-        pos[0] + rear[0] * exhaustDistance + side[0] * (sideOffset + jitterSide),
+        pos[0] +
+          rear[0] * exhaustDistance +
+          side[0] * (sideOffset + jitterSide),
         pos[1] + 0.05 + jitterUp,
-        pos[2] + rear[2] * exhaustDistance + side[2] * (sideOffset + jitterSide),
+        pos[2] +
+          rear[2] * exhaustDistance +
+          side[2] * (sideOffset + jitterSide),
       ];
 
       const drift = 0.9 + Math.random() * 0.9;

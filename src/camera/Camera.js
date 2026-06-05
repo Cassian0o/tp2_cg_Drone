@@ -89,10 +89,14 @@ export class Camera {
   }
 
   _updateCam3(dronePos, droneYaw, deltaTime) {
-    if (InputManager.isKeyPressed("ARROWUP")) this._cam3Pitch -= CAM3_PITCH_SPEED * deltaTime;
-    if (InputManager.isKeyPressed("ARROWDOWN")) this._cam3Pitch += CAM3_PITCH_SPEED * deltaTime;
-    if (InputManager.isKeyPressed("ARROWLEFT")) this._cam3Yaw += CAM3_YAW_SPEED * deltaTime;
-    if (InputManager.isKeyPressed("ARROWRIGHT")) this._cam3Yaw -= CAM3_YAW_SPEED * deltaTime;
+    if (InputManager.isKeyPressed("ARROWUP"))
+      this._cam3Pitch -= CAM3_PITCH_SPEED * deltaTime;
+    if (InputManager.isKeyPressed("ARROWDOWN"))
+      this._cam3Pitch += CAM3_PITCH_SPEED * deltaTime;
+    if (InputManager.isKeyPressed("ARROWLEFT"))
+      this._cam3Yaw += CAM3_YAW_SPEED * deltaTime;
+    if (InputManager.isKeyPressed("ARROWRIGHT"))
+      this._cam3Yaw -= CAM3_YAW_SPEED * deltaTime;
 
     this._cam3Pitch = Math.max(
       -CAM3_PITCH_LIMIT,
@@ -107,9 +111,11 @@ export class Camera {
     ];
 
     this._target = [
-      this.position[0] - Math.sin(eyeYaw) * Math.cos(this._cam3Pitch) * CAM3_LOOK_DIST,
+      this.position[0] -
+        Math.sin(eyeYaw) * Math.cos(this._cam3Pitch) * CAM3_LOOK_DIST,
       this.position[1] - Math.sin(this._cam3Pitch) * CAM3_LOOK_DIST,
-      this.position[2] - Math.cos(eyeYaw) * Math.cos(this._cam3Pitch) * CAM3_LOOK_DIST,
+      this.position[2] -
+        Math.cos(eyeYaw) * Math.cos(this._cam3Pitch) * CAM3_LOOK_DIST,
     ];
     this._up = [0, 1, 0];
   }
@@ -138,7 +144,12 @@ export class Camera {
   _rebuildMatrices() {
     this.aspect = this.gl.canvas.clientWidth / this.gl.canvas.clientHeight;
 
-    const projection = mat4.perspective((60 * Math.PI) / 180, this.aspect, 0.1, 2000);
+    const projection = mat4.perspective(
+      (60 * Math.PI) / 180,
+      this.aspect,
+      0.1,
+      2000,
+    );
     const target = this._target || [0, 0, 0];
     const up = this._up || [0, 1, 0];
 

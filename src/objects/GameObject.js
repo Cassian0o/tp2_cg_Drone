@@ -110,6 +110,8 @@ export class GameObject {
       twgl.drawBufferInfo(gl, this.bufferInfo);
     }
 
-    this.children.forEach((child) => child.drawShadow(gl, shadowProgramInfo, globalUniforms));
+    this.children.forEach((child) =>
+      child.drawShadow(gl, shadowProgramInfo, globalUniforms),
+    );
   }
 }

@@ -23,7 +23,17 @@ export class Grass extends GameObject {
     const pixel = new Uint8Array([34, 139, 34, 255]);
     const tex = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, tex);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, pixel);
+    gl.texImage2D(
+      gl.TEXTURE_2D,
+      0,
+      gl.RGBA,
+      1,
+      1,
+      0,
+      gl.RGBA,
+      gl.UNSIGNED_BYTE,
+      pixel,
+    );
     this.texture = tex;
   }
 
@@ -38,8 +48,8 @@ export class Grass extends GameObject {
 
     this.blades.forEach(({ x, z }) => {
       // Ângulo do billboard em direção à câmera
-      const dx  = camPos[0] - x;
-      const dz  = camPos[2] - z;
+      const dx = camPos[0] - x;
+      const dz = camPos[2] - z;
       const yaw = Math.atan2(dx, dz);
 
       const world = twgl.m4.identity();

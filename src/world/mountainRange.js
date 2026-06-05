@@ -53,7 +53,9 @@ export class MountainRange extends GameObject {
         const angle = (wrapped / SEGMENTS) * Math.PI * 2;
         const wave = peakNoise(wrapped, ringIndex);
         const height = ring.baseHeight + ring.variance * wave;
-        const radius = ring.radius + (ringIndex > 0 ? peakNoise(wrapped, ringIndex + 7) * 10 : 0);
+        const radius =
+          ring.radius +
+          (ringIndex > 0 ? peakNoise(wrapped, ringIndex + 7) * 10 : 0);
         vertices.push([
           Math.cos(angle) * radius,
           Math.max(height, ring.baseHeight === -8 ? -8 : 0.3),

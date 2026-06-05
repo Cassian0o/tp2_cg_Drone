@@ -25,7 +25,10 @@ export class StaticModel extends GameObject {
     try {
       this.bufferInfo = await loadObj(this.gl, this.modelPath);
     } catch (e) {
-      console.warn(`StaticModel: could not load ${this.modelPath}; using cube fallback.`, e);
+      console.warn(
+        `StaticModel: could not load ${this.modelPath}; using cube fallback.`,
+        e,
+      );
     }
   }
 }
