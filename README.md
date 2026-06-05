@@ -97,36 +97,39 @@ tp2_cg_Drone/
 │   ├── camera/
 │   │   └── Camera.js
 │   ├── engine/
-│   │   ├── Engine.js
+│   │   ├── AssetManager.js
+│   │   ├── engine.js
 │   │   ├── InputManager.js
-│   │   └── AssetManager.js
+│   │   └── ObjLoader.js
 │   ├── lighting.js
 │   ├── objects/
-│   │   ├── GameObject.js
-│   │   ├── DroneCarrier.js
-│   │   ├── Propeller.js
+│   │   ├── building.js
+│   │   ├── Cars.js
 │   │   ├── Cockpit.js
-│   │   ├── Building.js
-│   │   ├── LampPost.js
-│   │   ├── Billboard.js
+│   │   ├── DroneCarrier.js
+│   │   ├── GameObject.js
+│   │   ├── lampPost.js
+│   │   ├── Propeller.js
 │   │   ├── Vehicle.js
-│   │   └── Cars.js
+│   │   └── StaticModel.js
 │   └── world/
 │       ├── Scene.js
 │       ├── city.js
-│       ├── roads.js
-│       ├── terrain.js
-│       ├── Skybox.js
 │       ├── dayNight.js
 │       ├── fog.js
+│       ├── grass.js
+│       ├── landingPad.js
+│       ├── mountainRange.js
 │       ├── particles.js
-│       └── grass.js
+│       ├── roads.js
+│       ├── Skybox.js
+│       └── terrain.js
 ├── utils/
-│   ├── math.js
-│   ├── input.js
-│   └── textureLoader.js
+│   └── math.js
 └── assets/
     ├── audio/
+    ├── models/
+    ├── skybox/
     └── textures/
 ```
 
