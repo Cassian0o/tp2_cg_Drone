@@ -49,6 +49,7 @@ export class GameObject {
         u_world: world,
         u_worldInverseTranspose: mat4.transpose(mat4.inverse(world)),
         u_diffuseMap: this.texture,
+        u_opacity: 1.0,
       });
 
       twgl.drawBufferInfo(gl, this.bufferInfo);
