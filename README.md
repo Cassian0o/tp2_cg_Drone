@@ -153,3 +153,7 @@ tp2_cg_Drone/
 ![Camera Lateral](image-1.png)
 
 ![Cabine](image-2.png)
+
+## Vídeo
+
+- https://youtu.be/AGfFVu3Ka50
